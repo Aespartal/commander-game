@@ -1,0 +1,29 @@
+# log files
+*.log
+*.log.*
+*.log.*.gz
+*.log.*.xz
+
+# coverage directory used by tools like istanbul and coveralls
+coverage
+coverage-*.json
+coverage-*.lcov
+coverage-*.info
+
+# nyc test coverage
+.nyc_output
+.nyc_output.json
+.nyc_output.*.json
+.nyc_output.*.lcov
+.nyc_output.*.info
+
+# dotenv environment variables file
+.env
+.env.*.local
+.env.*.development.local
+.env.*.test.local
+.env.*.production.local
+
+# node_modules directory
+node_modules
+node_modules.*

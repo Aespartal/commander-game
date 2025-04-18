@@ -1,0 +1,17 @@
+{
+  "name": "commander",
+  "version": "0.0.0",
+  "workspaces": [
+    "site",
+    "api"
+  ],
+  "private": true,
+  "scripts": {
+    "build": "npm run build --stream",
+    "dev": "npm run dev --stream",
+    "test": "npm run test --stream",
+    "lint": "npm run lint --stream",
+    "format": "npm run format --stream",
+    "clean": "npm clean && npm bootstrap"
+  }
+}
