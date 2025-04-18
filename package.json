@@ -7,11 +7,26 @@
   ],
   "private": true,
   "scripts": {
-    "build": "npm run build --stream",
-    "dev": "npm run dev --stream",
-    "test": "npm run test --stream",
-    "lint": "npm run lint --stream",
-    "format": "npm run format --stream",
-    "clean": "npm clean && npm bootstrap"
+    "build": "npm-run-all --parallel build:site build:api",
+    "dev": "npm-run-all --parallel dev:site dev:api",
+    "test": "npm-run-all --parallel test:site test:api",
+    "lint": "npm-run-all --parallel lint:site lint:api",
+    "format": "npm-run-all --parallel format:site format:api",
+    "clean": "npm-run-all --parallel clean:site clean:api",
+    "dev:site": "npm run dev --prefix site",
+    "dev:api": "npm run dev --prefix api",
+    "build:site": "npm run build --prefix site",
+    "build:api": "npm run build --prefix api",
+    "test:site": "npm run test --prefix site",
+    "test:api": "npm run test --prefix api",
+    "lint:site": "npm run lint --prefix site",
+    "lint:api": "npm run lint --prefix api",
+    "format:site": "npm run format --prefix site",
+    "format:api": "npm run format --prefix api",
+    "clean:site": "npm run clean --prefix site",
+    "clean:api": "npm run clean --prefix api"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
   }
 }
