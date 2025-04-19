@@ -1,6 +1,8 @@
 {
   "name": "commander",
   "version": "0.0.0",
+  "type": "module",
+  "description": "A monorepo for the Commander project, which includes a React frontend and an Express backend.",
   "workspaces": [
     "site",
     "api"
