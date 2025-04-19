@@ -4,7 +4,6 @@ import {
   LoginCredentials,
   RegisterCredentials,
   AuthResponse,
-  UserInfo,
 } from "../types/auth"
 
 export const registerUser = async (

@@ -1,25 +1,21 @@
-import React, { useState, FormEvent } from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useState, FormEvent } from "react";
+import { useAuth } from "../../hooks/useAuth";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { login, error, isLoading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname ?? '/dashboard';
+  const from = location.state?.from?.pathname ?? "/dashboard";
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    try {
-      await login({ email, password });
-       navigate(from, { replace: true });
-    } catch (err) {
-      // El error ya se maneja y almacena en el contexto (useAuth)
-      console.error("Fallo el login desde el componente");
-    }
+
+    await login({ email, password });
+    navigate(from, { replace: true });
   };
 
   return (
@@ -27,7 +23,9 @@ const LoginForm: React.FC = () => {
       <h2 style={styles.title}>Iniciar Sesión</h2>
       {error && <p style={styles.errorText}>{error}</p>}
       <div style={styles.inputGroup}>
-        <label htmlFor="login-email" style={styles.label}>Email:</label>
+        <label htmlFor="login-email" style={styles.label}>
+          Email:
+        </label>
         <input
           id="login-email"
           type="email"
@@ -38,7 +36,9 @@ const LoginForm: React.FC = () => {
         />
       </div>
       <div style={styles.inputGroup}>
-        <label htmlFor="login-password" style={styles.label}>Contraseña:</label>
+        <label htmlFor="login-password" style={styles.label}>
+          Contraseña:
+        </label>
         <input
           id="login-password"
           type="password"
@@ -48,9 +48,12 @@ const LoginForm: React.FC = () => {
           style={styles.input}
         />
       </div>
-      <button type="submit" disabled={isLoading}
-      style={isLoading ? styles.buttonDisabled : styles.button}>
-        {isLoading ? 'Iniciando...' : 'Iniciar Sesión'}
+      <button
+        type="submit"
+        disabled={isLoading}
+        style={isLoading ? styles.buttonDisabled : styles.button}
+      >
+        {isLoading ? "Iniciando..." : "Iniciar Sesión"}
       </button>
     </form>
   );
@@ -130,6 +133,5 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   // button:hover (no deshabilitado) - añadir en CSS: background-color: #218838;
 };
-
 
 export default LoginForm;

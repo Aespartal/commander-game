@@ -43,9 +43,7 @@ const RegisterForm: React.FC = () => {
       setEmail("");
       setPassword("");
       setConfirmPassword("");
-      // Opcional: Redirigir al login tras un breve instante o directamente
-      setTimeout(() => navigate('/login'), 1500);
-      // navigate('/login'); // Redirección inmediata
+      setTimeout(() => navigate('/login'), 1000);
     } catch (err) {
       // El error de la API ya se maneja y almacena en 'apiError' a través del contexto useAuth.
       // No es necesario hacer nada más aquí, a menos que quieras un manejo específico adicional.
