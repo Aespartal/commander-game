@@ -6,7 +6,7 @@ import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Navigation from "./components/Navigation";
+import { Navigation } from "./components/Navigation";
 
 function App() {
   return (
