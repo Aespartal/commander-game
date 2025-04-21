@@ -7,6 +7,8 @@ import DashboardPage from "./pages/DashboardPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Navigation } from "./components/Navigation";
+import Box from "@mui/material/Box";
+import { Footer } from "./components/Footer";
 
 function App() {
   return (
@@ -15,7 +17,14 @@ function App() {
       {/* Envuelve todo con el proveedor de autenticación */}
       <Router>
         <Navigation /> {/* Barra de navegación */}
-        <div className="container" style={{ padding: "20px" }}>
+        <Box sx={{ 
+          display: "flex",
+          width: "100%",
+          flexDirection: "column",
+          padding: "16px",
+          backgroundColor: "#f5f5f5",
+          height: "calc(100vh - 140px)",
+        }}>
           {" "}
           {/* Estilo simple */}
           <Routes>
@@ -36,7 +45,8 @@ function App() {
             {/* Ruta para páginas no encontradas */}
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
-        </div>
+        </Box>
+        <Footer /> {/* Pie de página */}
       </Router>
     </AuthProvider>
   );
