@@ -170,9 +170,16 @@ export const Navigation: React.FC = () => {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography variant="h6" component={Link} to="/" sx={{ flexGrow: 1 }}>
-            <Logo />
-          </Typography>
+          <Box sx={{ display: "flex", flexGrow: 1 }}>
+            <Link
+              style={{ textDecoration: "none", display: "contents" }}
+              to="/"
+              
+            >
+              <Logo />
+            </Link>
+          </Box>
+
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {isAuthenticated ?? (
               <Typography

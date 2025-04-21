@@ -7,6 +7,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     textAlign: "center",
     padding: "40px 20px",
     fontFamily: "Arial, sans-serif",
+    height: "calc(100vh - 114px)",
   },
   title: {
     color: "#333",
