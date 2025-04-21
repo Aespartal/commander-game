@@ -14,6 +14,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import { Logo } from "../logo/Logo";
 
 export const Navigation: React.FC = () => {
   const { isAuthenticated, user, logout, isLoading } = useAuth();
@@ -95,28 +96,46 @@ export const Navigation: React.FC = () => {
     <Box
       sx={{
         display: "flex",
-      
+
         mt: isMobile ? 1 : 0,
         justifyContent: "center",
         alignContent: "center",
-      
       }}
     >
       {isAuthenticated ? (
         <>
-          <Button component={Link} to="/dashboard" color="inherit" sx={{ display: isMobile ? "none" : "block"}}>
+          <Button
+            component={Link}
+            to="/dashboard"
+            color="inherit"
+            sx={{ display: isMobile ? "none" : "block" }}
+          >
             Dashboard
           </Button>
-          <Button onClick={handleLogout} color="inherit" sx={{ display: isMobile ? "none" : "block"}}>
+          <Button
+            onClick={handleLogout}
+            color="inherit"
+            sx={{ display: isMobile ? "none" : "block" }}
+          >
             Cerrar Sesión
           </Button>
         </>
       ) : (
         <>
-          <Button component={Link} to="/login" color="inherit" sx={{ display: isMobile ? "none" : "block"}}>
+          <Button
+            component={Link}
+            to="/login"
+            color="inherit"
+            sx={{ display: isMobile ? "none" : "block" }}
+          >
             Iniciar Sesión
           </Button>
-          <Button component={Link} to="/register" color="inherit" sx={{ display: isMobile ? "none" : "block"}} >
+          <Button
+            component={Link}
+            to="/register"
+            color="inherit"
+            sx={{ display: isMobile ? "none" : "block" }}
+          >
             Registrarse
           </Button>
         </>
@@ -151,14 +170,18 @@ export const Navigation: React.FC = () => {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography variant="h6" component="div" sx={{ display: "block" }}>
-            Logo
+          <Typography variant="h6" component={Link} to="/" sx={{ flexGrow: 1 }}>
+            <Logo />
           </Typography>
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {isAuthenticated ?? (
               <Typography
                 variant="body1"
-                sx={{ mr: 2, display: isMobile ? "none" : "block", padding: "6px 8px" }}
+                sx={{
+                  mr: 2,
+                  display: isMobile ? "none" : "block",
+                  padding: "6px 8px",
+                }}
               >
                 Hola, {user?.email ?? "Usuario"}
               </Typography>
