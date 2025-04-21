@@ -15,7 +15,7 @@ interface AuthContextType {
   isLoading: boolean;
   login: (credentials: LoginCredentials) => Promise<void>;
   register: (credentials: RegisterCredentials) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   error: string | null;
 }
 
@@ -95,14 +95,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-  const logout = () => {
+  const logout = (): Promise<void> => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("authUser");
     setToken(null);
     setUser(null);
     setIsAuthenticated(false);
     setError(null);
-    window.location.href = '/login';
+    return Promise.resolve();
   };
 
   return (

@@ -1,125 +1,179 @@
-// frontend/src/components/Navigation.tsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
 
-// Estilos básicos en línea
-const styles: { [key: string]: React.CSSProperties } = {
-  nav: {
-    backgroundColor: "#333", // Fondo oscuro para la barra
-    padding: "10px 20px",
-    color: "white",
-    fontFamily: "Arial, sans-serif",
-  },
-  navList: {
-    listStyle: "none",
-    padding: 0,
-    margin: 0,
-    display: "flex", // Elementos en línea
-    alignItems: "center", // Centrar verticalmente
-  },
-  navItem: {
-    marginLeft: "15px", // Espacio entre elementos
-  },
-  navLink: {
-    color: "white",
-    textDecoration: "none",
-    padding: "5px 10px",
-    borderRadius: "4px",
-    transition: "background-color 0.3s ease",
-  },
-  // navLink:hover - añadir en CSS: background-color: #555;
-  userInfo: {
-    color: "#ccc", // Un color más tenue para la info del usuario
-    marginRight: "15px",
-  },
-  logoutButton: {
-    backgroundColor: "#dc3545", // Rojo para logout
-    color: "white",
-    border: "none",
-    padding: "6px 12px",
-    borderRadius: "4px",
-    cursor: "pointer",
-    fontSize: "0.9em",
-    transition: "background-color 0.3s ease",
-  },
-  // logoutButton:hover - añadir en CSS: background-color: #c82333;
-  pushRight: {
-    marginLeft: "auto", // Empuja los elementos siguientes a la derecha
-  },
-  loadingText: {
-    color: "#aaa",
-  },
-};
-
-const Navigation: React.FC = () => {
+export const Navigation: React.FC = () => {
   const { isAuthenticated, user, logout, isLoading } = useAuth();
   const navigate = useNavigate();
+  const isMobile = useMediaQuery("(max-width:600px)"); // Define breakpoint for mobile view
+
+  useEffect(() => {
+    console.log("isMobile:", isMobile);
+  }, [isMobile]);
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
-    // Redirigir al home o al login después del logout
     navigate("/");
   };
 
-  // No renderizar nada o un placeholder mientras carga el estado inicial
-  // para evitar parpadeo de links incorrectos
-  if (isLoading) {
-    return (
-      <nav style={styles.nav}>
-        <div style={styles.navList}>
-          <span style={styles.loadingText}>Cargando navegación...</span>
-        </div>
-      </nav>
-    );
-  }
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+      setIsDrawerOpen(open);
+    };
 
-  return (
-    <nav style={styles.nav}>
-      <ul style={styles.navList}>
-        <li style={styles.navItem}>
-          <Link to="/" style={styles.navLink}>
-            Inicio
-          </Link>
-        </li>
-
+  const list = () => (
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+    >
+      <List>
+        <ListItem key="home" disablePadding>
+          <ListItemButton component={Link} to="/">
+            <ListItemText primary="Inicio" />
+          </ListItemButton>
+        </ListItem>
         {isAuthenticated ? (
           <>
-            <li style={styles.navItem}>
-              <Link to="/dashboard" style={styles.navLink}>
-                Dashboard
-              </Link>
-            </li>
-            {/* Separador visual a la derecha */}
-            <li style={{ ...styles.navItem, ...styles.pushRight }}>
-              <span style={styles.userInfo}>
-                Hola, {user?.email ?? "Usuario"}
-              </span>
-            </li>
-            <li style={styles.navItem}>
-              <button onClick={handleLogout} style={styles.logoutButton}>
-                Cerrar Sesión
-              </button>
-            </li>
+            <ListItem key="dashboard" disablePadding>
+              <ListItemButton component={Link} to="/dashboard">
+                <ListItemText primary="Dashboard" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem key="logout" disablePadding>
+              <ListItemButton onClick={handleLogout}>
+                <ListItemText primary="Cerrar Sesión" />
+              </ListItemButton>
+            </ListItem>
           </>
         ) : (
           <>
-            {/* Separador visual a la derecha */}
-            <li style={{ ...styles.navItem, ...styles.pushRight }}>
-              <Link to="/login" style={styles.navLink}>
-                Iniciar Sesión
-              </Link>
-            </li>
-            <li style={styles.navItem}>
-              <Link to="/register" style={styles.navLink}>
-                Registrarse
-              </Link>
-            </li>
+            <ListItem key="login" disablePadding>
+              <ListItemButton component={Link} to="/login">
+                <ListItemText primary="Iniciar Sesión" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem key="register" disablePadding>
+              <ListItemButton component={Link} to="/register">
+                <ListItemText primary="Registrarse" />
+              </ListItemButton>
+            </ListItem>
           </>
         )}
-      </ul>
-    </nav>
+      </List>
+    </Box>
+  );
+
+  if (isLoading) {
+    return <Typography>Cargando navegación...</Typography>;
+  }
+
+  const navButtons = (
+    <Box
+      sx={{
+        display: "flex",
+      
+        mt: isMobile ? 1 : 0,
+        justifyContent: "center",
+        alignContent: "center",
+      
+      }}
+    >
+      {isAuthenticated ? (
+        <>
+          <Button component={Link} to="/dashboard" color="inherit" sx={{ display: isMobile ? "none" : "block"}}>
+            Dashboard
+          </Button>
+          <Button onClick={handleLogout} color="inherit" sx={{ display: isMobile ? "none" : "block"}}>
+            Cerrar Sesión
+          </Button>
+        </>
+      ) : (
+        <>
+          <Button component={Link} to="/login" color="inherit" sx={{ display: isMobile ? "none" : "block"}}>
+            Iniciar Sesión
+          </Button>
+          <Button component={Link} to="/register" color="inherit" sx={{ display: isMobile ? "none" : "block"}} >
+            Registrarse
+          </Button>
+        </>
+      )}
+    </Box>
+  );
+
+  return (
+    <AppBar position="static">
+      <Toolbar
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
+          {isMobile && (
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={toggleDrawer(true)}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+          <Typography variant="h6" component="div" sx={{ display: "block" }}>
+            Logo
+          </Typography>
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            {isAuthenticated ?? (
+              <Typography
+                variant="body1"
+                sx={{ mr: 2, display: isMobile ? "none" : "block", padding: "6px 8px" }}
+              >
+                Hola, {user?.email ?? "Usuario"}
+              </Typography>
+            )}
+            <Button component={Link} to="/" color="inherit">
+              Inicio
+            </Button>
+            {<>{navButtons}</>}
+          </Box>
+        </Box>
+        {isMobile && navButtons}
+      </Toolbar>
+      <Drawer open={isDrawerOpen} onClose={toggleDrawer(false)}>
+        {list()}
+      </Drawer>
+    </AppBar>
   );
 };
-
-export default Navigation;
