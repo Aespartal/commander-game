@@ -18,17 +18,21 @@ coverage-*.info
 .nyc_output.*.info
 
 # dotenv environment variables file
-**/.env
-**/.env.*.local
-**/.env.*.development.local
-**/.env.*.test.local
-**/.env.*.production.local
-
+.env
+.env.*.local
+.env.*.development.local
+.env.*.test.local
+.env.*.production.local
 
 # node_modules directory
 node_modules
-node_modules.*
+api/node_modules
+site/node_modules
 
-# production build directory
+# dist directory
 dist
-dist.*
+build
+
+# dev.nix
+dev.nix
+dev-*.nix
