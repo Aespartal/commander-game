@@ -22,7 +22,6 @@ function App() {
           width: "100%",
           flexDirection: "column",
           padding: "16px",
-          backgroundColor: "#f5f5f5",
           height: "calc(100vh - 140px)",
         }}>
           {" "}
