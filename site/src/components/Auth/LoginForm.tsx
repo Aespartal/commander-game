@@ -1,6 +1,33 @@
 import React, { useState, FormEvent } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
+import { TextField, Button, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
+
+const StyledForm = styled("form")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  maxWidth: "400px",
+  width: "100%",
+  margin: theme.spacing(4, "auto"),
+  padding: theme.spacing(3),
+  backgroundColor: theme.palette.background.paper,
+  border: `1px solid ${theme.palette.divider}`,
+  borderRadius: theme.shape.borderRadius,
+  boxShadow: theme.shadows[3],
+  fontFamily: theme.typography.fontFamily,
+}));
+
+const StyledError = styled(Typography)(({ theme }) => ({
+  color: theme.palette.error.main,
+  backgroundColor: theme.palette.error.light,
+  border: `1px solid ${theme.palette.error.dark}`,
+  padding: theme.spacing(1),
+  borderRadius: theme.shape.borderRadius,
+  marginBottom: theme.spacing(2),
+  textAlign: "center",
+  fontSize: "0.9em",
+}));
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -15,123 +42,48 @@ const LoginForm: React.FC = () => {
     e.preventDefault();
 
     await login({ email, password });
-    navigate(from, { replace: true });
+    if (!error) {
+      navigate(from, { replace: true });
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} style={styles.form}>
-      <h2 style={styles.title}>Iniciar Sesión</h2>
-      {error && <p style={styles.errorText}>{error}</p>}
-      <div style={styles.inputGroup}>
-        <label htmlFor="login-email" style={styles.label}>
-          Email:
-        </label>
-        <input
-          id="login-email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={styles.input}
-        />
-      </div>
-      <div style={styles.inputGroup}>
-        <label htmlFor="login-password" style={styles.label}>
-          Contraseña:
-        </label>
-        <input
-          id="login-password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={styles.input}
-        />
-      </div>
-      <button
+    <StyledForm onSubmit={handleSubmit}>
+      <Typography component="h2" variant="h5" align="center" gutterBottom>
+        Iniciar Sesión
+      </Typography>
+      {error && <StyledError>{error}</StyledError>}
+      <TextField
+        id="login-email"
+        label="Email"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        margin="normal"
+        required
+        fullWidth
+      />
+      <TextField
+        id="login-password"
+        label="Contraseña"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        margin="normal"
+        required
+        fullWidth
+      />
+      <Button
         type="submit"
+        variant="contained"
+        color="primary"
         disabled={isLoading}
-        style={isLoading ? styles.buttonDisabled : styles.button}
+        fullWidth
       >
         {isLoading ? "Iniciando..." : "Iniciar Sesión"}
-      </button>
-    </form>
+      </Button>
+    </StyledForm>
   );
-};
-
-const styles: { [key: string]: React.CSSProperties } = {
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    maxWidth: "400px",
-    margin: "40px auto",
-    padding: "30px",
-    border: "1px solid #ddd",
-    borderRadius: "8px",
-    boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-    fontFamily: "Arial, sans-serif",
-  },
-  title: {
-    textAlign: "center",
-    color: "#333",
-    marginBottom: "25px",
-  },
-  inputGroup: {
-    marginBottom: "20px",
-  },
-  label: {
-    display: "block",
-    marginBottom: "5px",
-    color: "#555",
-    fontWeight: "bold",
-  },
-  input: {
-    width: "100%",
-    padding: "10px",
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-    boxSizing: "border-box", // Para que padding no aumente el tamaño total
-  },
-  button: {
-    padding: "12px 15px",
-    backgroundColor: "#28a745", // Verde para registro
-    color: "white",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "pointer",
-    fontSize: "1em",
-    transition: "background-color 0.3s ease",
-  },
-  buttonDisabled: {
-    padding: "12px 15px",
-    backgroundColor: "#aaa",
-    color: "#eee",
-    border: "none",
-    borderRadius: "4px",
-    cursor: "not-allowed",
-    fontSize: "1em",
-  },
-  errorText: {
-    color: "#dc3545", // Rojo para errores
-    backgroundColor: "#f8d7da",
-    border: "1px solid #f5c6cb",
-    padding: "10px",
-    borderRadius: "4px",
-    marginBottom: "15px",
-    textAlign: "center",
-    fontSize: "0.9em",
-  },
-  successText: {
-    color: "#155724", // Verde oscuro para éxito
-    backgroundColor: "#d4edda",
-    border: "1px solid #c3e6cb",
-    padding: "10px",
-    borderRadius: "4px",
-    marginBottom: "15px",
-    textAlign: "center",
-    fontSize: "0.9em",
-  },
-  // button:hover (no deshabilitado) - añadir en CSS: background-color: #218838;
 };
 
 export default LoginForm;
