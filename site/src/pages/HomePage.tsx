@@ -30,7 +30,6 @@ const StyledLink = styled(Link)(({ theme }) => ({
 
 const StyledButton = styled(Button)(({ theme }) => ({
   margin: theme.spacing(1),
-  backgroundColor: "#556B2F", 
   color: "#fff",
   "&:hover": {
     backgroundColor: "#3e4c22",
