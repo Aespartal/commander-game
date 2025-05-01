@@ -1,10 +1,10 @@
-# Commander-backlog
+# Commander-game
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![Docker](https://img.shields.io/badge/Docker-Compose-blue)](https://docs.docker.com/compose/)
 
-Commander-backlog es un proyecto de juego de estrategia multijugador basado en microservicios, inspirado en juegos como OGame. Los jugadores pueden gestionar territorios, recolectar recursos, construir edificios, investigar tecnologías y expandir su imperio a través de múltiples servidores/mundos.
+Commander-game es un proyecto de juego de estrategia multijugador basado en microservicios, inspirado en juegos como OGame. Los jugadores pueden gestionar territorios, recolectar recursos, construir edificios, investigar tecnologías y expandir su imperio a través de múltiples servidores/mundos.
 
 ## 🎮 Características del juego
 
@@ -17,7 +17,7 @@ Commander-backlog es un proyecto de juego de estrategia multijugador basado en m
 
 ## 🧩 Arquitectura
 
-![Arquitectura del Sistema](https://via.placeholder.com/800x400?text=Commander-backlog+Architecture)
+![Arquitectura del Sistema](https://via.placeholder.com/800x400?text=Commander-game+Architecture)
 
 - **API Gateway**: Punto de entrada único al sistema. Enruta solicitudes, aplica rate limiting y gestiona la autenticación inicial.
   
@@ -91,7 +91,7 @@ Cada servicio se ejecuta en su propio contenedor Docker y mantiene su propia bas
 ## 📁 Estructura del proyecto
 
 ```
-commander-backlog/
+commander-game/
 ├── docker-compose.yml         # Configuración de Docker Compose
 ├── .github/                   # Workflows de GitHub Actions
 ├── services/                  # Código fuente de los microservicios
