@@ -98,13 +98,13 @@ commander-game/
 │   ├── api-gateway/           # API Gateway
 │   ├── auth-service/          # Servicio de autenticación
 │   ├── world-manager/         # Gestor de mundos
-│   └── game-engine/           # Motor del juego
+│   ├── game-engine/           # Motor del juego
+│   └── shared/                    # Código compartido entre servicios
+│     ├── models/                # Definiciones de modelos comunes
+│     └── utils/                 # Utilidades compartidas
 ├── site/                  # Aplicación frontend React
 │   ├── public/
 │   └── src/
-├── shared/                    # Código compartido entre servicios
-│   ├── models/                # Definiciones de modelos comunes
-│   └── utils/                 # Utilidades compartidas
 └── docs/                      # Documentación adicional
 ```
 
