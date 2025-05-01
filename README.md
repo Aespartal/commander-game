@@ -99,7 +99,7 @@ commander-game/
 │   ├── auth-service/          # Servicio de autenticación
 │   ├── world-manager/         # Gestor de mundos
 │   └── game-engine/           # Motor del juego
-├── frontend/                  # Aplicación frontend React
+├── site/                  # Aplicación frontend React
 │   ├── public/
 │   └── src/
 ├── shared/                    # Código compartido entre servicios
