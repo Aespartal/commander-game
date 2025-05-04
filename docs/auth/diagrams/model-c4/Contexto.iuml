@@ -1,0 +1,50 @@
+@startuml auth-context-diagram
+set separator none
+title Sistema de Autenticación - Diagrama de Contexto
+
+top to bottom direction
+
+skinparam {
+  arrowFontSize 10
+  defaultTextAlignment center
+  wrapWidth 200
+  maxMessageSize 100
+}
+
+hide stereotype
+
+skinparam person<<Jugador>> {
+  BackgroundColor #08427b
+  FontColor #ffffff
+  BorderColor #052e56
+  shadowing false
+}
+skinparam rectangle<<ProveedoresOAuth>> {
+  BackgroundColor #999999
+  FontColor #ffffff
+  BorderColor #6b6b6b
+  shadowing false
+}
+skinparam rectangle<<ServidoresdeJuego>> {
+  BackgroundColor #999999
+  FontColor #ffffff
+  BorderColor #6b6b6b
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación>> {
+  BackgroundColor #dddddd
+  FontColor #000000
+  BorderColor #9a9a9a
+  shadowing false
+}
+
+person "==Jugador\n<size:10>[Person]</size>\n\nUsuario del juego que necesita autenticarse" <<Jugador>> as Jugador
+rectangle "==Proveedores OAuth\n<size:10>[Software System]</size>\n\nSistemas de autenticación de terceros" <<ProveedoresOAuth>> as ProveedoresOAuth
+rectangle "==Servidores de Juego\n<size:10>[Software System]</size>\n\nAlojan sesiones de juego" <<ServidoresdeJuego>> as ServidoresdeJuego
+rectangle "==Sistema de Autenticación\n<size:10>[Software System]</size>\n\nGestiona identidad, sesiones y seguridad de usuarios" <<SistemadeAutenticación>> as SistemadeAutenticación
+
+Jugador .[#707070,thickness=2].> SistemadeAutenticación : "<color:#707070>Se registra, inicia sesión y gestiona su cuenta"
+Jugador .[#707070,thickness=2].> ServidoresdeJuego : "<color:#707070>Juega en"
+SistemadeAutenticación .[#707070,thickness=2].> ProveedoresOAuth : "<color:#707070>Autentica con"
+SistemadeAutenticación .[#707070,thickness=2].> ServidoresdeJuego : "<color:#707070>Gestiona acceso"
+@enduml

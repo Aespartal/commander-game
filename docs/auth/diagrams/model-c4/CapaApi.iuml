@@ -1,0 +1,57 @@
+@startuml auth-capa-api-diagram
+set separator none
+title Sistema de Autenticación - Capa de API
+
+top to bottom direction
+
+skinparam {
+  arrowFontSize 10
+  defaultTextAlignment center
+  wrapWidth 200
+  maxMessageSize 100
+}
+
+hide stereotype
+
+skinparam rectangle<<SistemadeAutenticación.CapadeAPI.AuthMiddleware>> {
+  BackgroundColor #b3e5fc
+  FontColor #000000
+  BorderColor #7da0b0
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.CasosdeUso>> {
+  BackgroundColor #6c8ebf
+  FontColor #ffffff
+  BorderColor #4b6385
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.CapadeAPI.Controllers>> {
+  BackgroundColor #b3e5fc
+  FontColor #000000
+  BorderColor #7da0b0
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.CapadeAPI.ExpressRoutes>> {
+  BackgroundColor #b3e5fc
+  FontColor #000000
+  BorderColor #7da0b0
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.CapadeAPI>> {
+  BorderColor #2e6295
+  FontColor #2e6295
+  shadowing false
+}
+
+rectangle "==Casos de Uso\n<size:10>[Container: Application Services]</size>\n\nServicios de aplicación" <<SistemadeAutenticación.CasosdeUso>> as SistemadeAutenticación.CasosdeUso
+
+rectangle "Capa de API\n<size:10>[Container: Express.js]</size>" <<SistemadeAutenticación.CapadeAPI>> {
+  rectangle "==Express Routes\n<size:10>[Component: Express.js Router]</size>\n\nDefine endpoints para el API" <<SistemadeAutenticación.CapadeAPI.ExpressRoutes>> as SistemadeAutenticación.CapadeAPI.ExpressRoutes
+  rectangle "==Controllers\n<size:10>[Component: Express]</size>\n\nCoordina las peticiones" <<SistemadeAutenticación.CapadeAPI.Controllers>> as SistemadeAutenticación.CapadeAPI.Controllers
+  rectangle "==Auth Middleware\n<size:10>[Component: Express]</size>\n\nValidación y autenticación" <<SistemadeAutenticación.CapadeAPI.AuthMiddleware>> as SistemadeAutenticación.CapadeAPI.AuthMiddleware
+}
+
+SistemadeAutenticación.CapadeAPI.ExpressRoutes .[#707070,thickness=2].> SistemadeAutenticación.CapadeAPI.Controllers : "<color:#707070>Enruta a"
+SistemadeAutenticación.CapadeAPI.Controllers .[#707070,thickness=2].> SistemadeAutenticación.CapadeAPI.AuthMiddleware : "<color:#707070>Usa"
+SistemadeAutenticación.CapadeAPI.Controllers .[#707070,thickness=2].> SistemadeAutenticación.CasosdeUso : "<color:#707070>Usa"
+@enduml

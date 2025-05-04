@@ -1,0 +1,97 @@
+@startuml auth-container-diagram
+set separator none
+title Sistema de Autenticación - Diagrama de Contenedores
+
+top to bottom direction
+
+skinparam {
+  arrowFontSize 10
+  defaultTextAlignment center
+  wrapWidth 200
+  maxMessageSize 100
+}
+
+hide stereotype
+
+skinparam rectangle<<SistemadeAutenticación.APIGateway>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.AdaptadoresdePersistencia>> {
+  BackgroundColor #26a69a
+  FontColor #ffffff
+  BorderColor #1a746b
+  shadowing false
+}
+skinparam database<<SistemadeAutenticación.BasedeDatos>> {
+  BackgroundColor #1168bd
+  FontColor #ffffff
+  BorderColor #0b4884
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.CapadeAPI>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.CasosdeUso>> {
+  BackgroundColor #6c8ebf
+  FontColor #ffffff
+  BorderColor #4b6385
+  shadowing false
+}
+skinparam component<<SistemadeAutenticación.InterfacesdeRepositorio>> {
+  BackgroundColor #85bbf0
+  FontColor #000000
+  BorderColor #000000
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.ModelodeDominio>> {
+  BackgroundColor #fff176
+  FontColor #000000
+  BorderColor #b2a852
+  shadowing false
+}
+skinparam rectangle<<ProveedoresOAuth>> {
+  BackgroundColor #999999
+  FontColor #ffffff
+  BorderColor #6b6b6b
+  shadowing false
+}
+skinparam rectangle<<ServidoresdeJuego>> {
+  BackgroundColor #999999
+  FontColor #ffffff
+  BorderColor #6b6b6b
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación>> {
+  BorderColor #9a9a9a
+  FontColor #9a9a9a
+  shadowing false
+}
+
+rectangle "==Proveedores OAuth\n<size:10>[Software System]</size>\n\nSistemas de autenticación de terceros" <<ProveedoresOAuth>> as ProveedoresOAuth
+rectangle "==Servidores de Juego\n<size:10>[Software System]</size>\n\nAlojan sesiones de juego" <<ServidoresdeJuego>> as ServidoresdeJuego
+
+rectangle "Sistema de Autenticación\n<size:10>[Software System]</size>" <<SistemadeAutenticación>> {
+  rectangle "==Adaptadores de Persistencia\n<size:10>[Container: ORM / PostgreSQL]</size>\n\nImplementa contratos de repositorios" <<SistemadeAutenticación.AdaptadoresdePersistencia>> as SistemadeAutenticación.AdaptadoresdePersistencia
+  component "==Interfaces de Repositorio\n<size:10>[Container: Interfaces]</size>\n\nContratos para acceso al dominio" <<SistemadeAutenticación.InterfacesdeRepositorio>> as SistemadeAutenticación.InterfacesdeRepositorio
+  rectangle "==Casos de Uso\n<size:10>[Container: Application Services]</size>\n\nServicios de aplicación" <<SistemadeAutenticación.CasosdeUso>> as SistemadeAutenticación.CasosdeUso
+  rectangle "==Modelo de Dominio\n<size:10>[Container: Domain]</size>\n\nEntidades y lógica de negocio" <<SistemadeAutenticación.ModelodeDominio>> as SistemadeAutenticación.ModelodeDominio
+  database "==Base de Datos\n<size:10>[Container: PostgreSQL]</size>\n\nAlmacena usuarios, sesiones y configuración" <<SistemadeAutenticación.BasedeDatos>> as SistemadeAutenticación.BasedeDatos
+  rectangle "==API Gateway\n<size:10>[Container: Express.js]</size>\n\nPunto de entrada al sistema" <<SistemadeAutenticación.APIGateway>> as SistemadeAutenticación.APIGateway
+  rectangle "==Capa de API\n<size:10>[Container: Express.js]</size>\n\nRutas, controladores y middleware" <<SistemadeAutenticación.CapadeAPI>> as SistemadeAutenticación.CapadeAPI
+}
+
+SistemadeAutenticación.CasosdeUso .[#707070,thickness=2].> ProveedoresOAuth : "<color:#707070>Conecta con"
+SistemadeAutenticación.CasosdeUso .[#707070,thickness=2].> ServidoresdeJuego : "<color:#707070>Gestiona"
+SistemadeAutenticación.APIGateway .[#707070,thickness=2].> SistemadeAutenticación.CapadeAPI : "<color:#707070>Enruta peticiones"
+SistemadeAutenticación.CapadeAPI .[#707070,thickness=2].> SistemadeAutenticación.CasosdeUso : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso .[#707070,thickness=2].> SistemadeAutenticación.InterfacesdeRepositorio : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso .[#707070,thickness=2].> SistemadeAutenticación.ModelodeDominio : "<color:#707070>Usa"
+SistemadeAutenticación.AdaptadoresdePersistencia .[#707070,thickness=2].> SistemadeAutenticación.BasedeDatos : "<color:#707070>Lee/Escribe"
+SistemadeAutenticación.AdaptadoresdePersistencia .[#707070,thickness=2].> SistemadeAutenticación.InterfacesdeRepositorio : "<color:#707070>Implementa"
+@enduml

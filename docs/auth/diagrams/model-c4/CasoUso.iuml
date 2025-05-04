@@ -1,0 +1,147 @@
+@startuml auth-cases-uses-diagram
+set separator none
+title Sistema de Autenticación - Casos de Uso
+
+top to bottom direction
+
+skinparam {
+  arrowFontSize 10
+  defaultTextAlignment center
+  wrapWidth 200
+  maxMessageSize 100
+}
+
+hide stereotype
+
+skinparam rectangle<<SistemadeAutenticación.CasosdeUso.AuthenticatorService>> {
+  BackgroundColor #6c8ebf
+  FontColor #ffffff
+  BorderColor #4b6385
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.CapadeAPI>> {
+  BackgroundColor #438dd5
+  FontColor #ffffff
+  BorderColor #2e6295
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.CasosdeUso.ExternalCredentialsService>> {
+  BackgroundColor #6c8ebf
+  FontColor #ffffff
+  BorderColor #4b6385
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.CasosdeUso.GameServerService>> {
+  BackgroundColor #6c8ebf
+  FontColor #ffffff
+  BorderColor #4b6385
+  shadowing false
+}
+skinparam component<<SistemadeAutenticación.InterfacesdeRepositorio>> {
+  BackgroundColor #85bbf0
+  FontColor #000000
+  BorderColor #000000
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.ModelodeDominio>> {
+  BackgroundColor #fff176
+  FontColor #000000
+  BorderColor #b2a852
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.CasosdeUso.PlayerSecurityService>> {
+  BackgroundColor #6c8ebf
+  FontColor #ffffff
+  BorderColor #4b6385
+  shadowing false
+}
+skinparam rectangle<<ProveedoresOAuth>> {
+  BackgroundColor #999999
+  FontColor #ffffff
+  BorderColor #6b6b6b
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.CasosdeUso.RecoveryTokenService>> {
+  BackgroundColor #6c8ebf
+  FontColor #ffffff
+  BorderColor #4b6385
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.CasosdeUso.ServerManagerService>> {
+  BackgroundColor #6c8ebf
+  FontColor #ffffff
+  BorderColor #4b6385
+  shadowing false
+}
+skinparam rectangle<<ServidoresdeJuego>> {
+  BackgroundColor #999999
+  FontColor #ffffff
+  BorderColor #6b6b6b
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.CasosdeUso.SessionService>> {
+  BackgroundColor #6c8ebf
+  FontColor #ffffff
+  BorderColor #4b6385
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.CasosdeUso.UserService>> {
+  BackgroundColor #6c8ebf
+  FontColor #ffffff
+  BorderColor #4b6385
+  shadowing false
+}
+skinparam rectangle<<SistemadeAutenticación.CasosdeUso>> {
+  BorderColor #4b6385
+  FontColor #4b6385
+  shadowing false
+}
+
+rectangle "==Proveedores OAuth\n<size:10>[Software System]</size>\n\nSistemas de autenticación de terceros" <<ProveedoresOAuth>> as ProveedoresOAuth
+rectangle "==Servidores de Juego\n<size:10>[Software System]</size>\n\nAlojan sesiones de juego" <<ServidoresdeJuego>> as ServidoresdeJuego
+rectangle "==Capa de API\n<size:10>[Container: Express.js]</size>\n\nRutas, controladores y middleware" <<SistemadeAutenticación.CapadeAPI>> as SistemadeAutenticación.CapadeAPI
+component "==Interfaces de Repositorio\n<size:10>[Container: Interfaces]</size>\n\nContratos para acceso al dominio" <<SistemadeAutenticación.InterfacesdeRepositorio>> as SistemadeAutenticación.InterfacesdeRepositorio
+rectangle "==Modelo de Dominio\n<size:10>[Container: Domain]</size>\n\nEntidades y lógica de negocio" <<SistemadeAutenticación.ModelodeDominio>> as SistemadeAutenticación.ModelodeDominio
+
+rectangle "Casos de Uso\n<size:10>[Container: Application Services]</size>" <<SistemadeAutenticación.CasosdeUso>> {
+  rectangle "==AuthenticatorService\n<size:10>[Component: Service]</size>\n\nCoordina autenticación" <<SistemadeAutenticación.CasosdeUso.AuthenticatorService>> as SistemadeAutenticación.CasosdeUso.AuthenticatorService
+  rectangle "==UserService\n<size:10>[Component: Service]</size>\n\nImplementa IUserService" <<SistemadeAutenticación.CasosdeUso.UserService>> as SistemadeAutenticación.CasosdeUso.UserService
+  rectangle "==SessionService\n<size:10>[Component: Service]</size>\n\nImplementa ISessionService" <<SistemadeAutenticación.CasosdeUso.SessionService>> as SistemadeAutenticación.CasosdeUso.SessionService
+  rectangle "==PlayerSecurityService\n<size:10>[Component: Service]</size>\n\nImplementa IPlayerSecurityService" <<SistemadeAutenticación.CasosdeUso.PlayerSecurityService>> as SistemadeAutenticación.CasosdeUso.PlayerSecurityService
+  rectangle "==RecoveryTokenService\n<size:10>[Component: Service]</size>\n\nImplementa IRecoveryTokenService" <<SistemadeAutenticación.CasosdeUso.RecoveryTokenService>> as SistemadeAutenticación.CasosdeUso.RecoveryTokenService
+  rectangle "==ExternalCredentialsService\n<size:10>[Component: Service]</size>\n\nImplementa IExternalCredentialsService" <<SistemadeAutenticación.CasosdeUso.ExternalCredentialsService>> as SistemadeAutenticación.CasosdeUso.ExternalCredentialsService
+  rectangle "==ServerManagerService\n<size:10>[Component: Service]</size>\n\nImplementa IServerManagerService" <<SistemadeAutenticación.CasosdeUso.ServerManagerService>> as SistemadeAutenticación.CasosdeUso.ServerManagerService
+  rectangle "==GameServerService\n<size:10>[Component: Service]</size>\n\nImplementa IGameServerService" <<SistemadeAutenticación.CasosdeUso.GameServerService>> as SistemadeAutenticación.CasosdeUso.GameServerService
+}
+
+SistemadeAutenticación.CasosdeUso.RecoveryTokenService .[#707070,thickness=2].> SistemadeAutenticación.ModelodeDominio : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.ExternalCredentialsService .[#707070,thickness=2].> SistemadeAutenticación.ModelodeDominio : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.ServerManagerService .[#707070,thickness=2].> SistemadeAutenticación.ModelodeDominio : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.GameServerService .[#707070,thickness=2].> SistemadeAutenticación.ModelodeDominio : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.ExternalCredentialsService .[#707070,thickness=2].> ProveedoresOAuth : "<color:#707070>Conecta con"
+SistemadeAutenticación.CasosdeUso.ServerManagerService .[#707070,thickness=2].> ServidoresdeJuego : "<color:#707070>Gestiona"
+SistemadeAutenticación.CasosdeUso.GameServerService .[#707070,thickness=2].> ServidoresdeJuego : "<color:#707070>Monitorea"
+SistemadeAutenticación.CapadeAPI .[#707070,thickness=2].> SistemadeAutenticación.CasosdeUso.AuthenticatorService : "<color:#707070>Usa"
+SistemadeAutenticación.CapadeAPI .[#707070,thickness=2].> SistemadeAutenticación.CasosdeUso.UserService : "<color:#707070>Usa"
+SistemadeAutenticación.CapadeAPI .[#707070,thickness=2].> SistemadeAutenticación.CasosdeUso.SessionService : "<color:#707070>Usa"
+SistemadeAutenticación.CapadeAPI .[#707070,thickness=2].> SistemadeAutenticación.CasosdeUso.PlayerSecurityService : "<color:#707070>Usa"
+SistemadeAutenticación.CapadeAPI .[#707070,thickness=2].> SistemadeAutenticación.CasosdeUso.RecoveryTokenService : "<color:#707070>Usa"
+SistemadeAutenticación.CapadeAPI .[#707070,thickness=2].> SistemadeAutenticación.CasosdeUso.ExternalCredentialsService : "<color:#707070>Usa"
+SistemadeAutenticación.CapadeAPI .[#707070,thickness=2].> SistemadeAutenticación.CasosdeUso.ServerManagerService : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.AuthenticatorService .[#707070,thickness=2].> SistemadeAutenticación.CasosdeUso.UserService : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.AuthenticatorService .[#707070,thickness=2].> SistemadeAutenticación.CasosdeUso.SessionService : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.AuthenticatorService .[#707070,thickness=2].> SistemadeAutenticación.CasosdeUso.PlayerSecurityService : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.UserService .[#707070,thickness=2].> SistemadeAutenticación.CasosdeUso.SessionService : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.UserService .[#707070,thickness=2].> SistemadeAutenticación.CasosdeUso.RecoveryTokenService : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.ServerManagerService .[#707070,thickness=2].> SistemadeAutenticación.CasosdeUso.GameServerService : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.UserService .[#707070,thickness=2].> SistemadeAutenticación.InterfacesdeRepositorio : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.SessionService .[#707070,thickness=2].> SistemadeAutenticación.InterfacesdeRepositorio : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.PlayerSecurityService .[#707070,thickness=2].> SistemadeAutenticación.InterfacesdeRepositorio : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.RecoveryTokenService .[#707070,thickness=2].> SistemadeAutenticación.InterfacesdeRepositorio : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.ExternalCredentialsService .[#707070,thickness=2].> SistemadeAutenticación.InterfacesdeRepositorio : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.ServerManagerService .[#707070,thickness=2].> SistemadeAutenticación.InterfacesdeRepositorio : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.GameServerService .[#707070,thickness=2].> SistemadeAutenticación.InterfacesdeRepositorio : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.UserService .[#707070,thickness=2].> SistemadeAutenticación.ModelodeDominio : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.SessionService .[#707070,thickness=2].> SistemadeAutenticación.ModelodeDominio : "<color:#707070>Usa"
+SistemadeAutenticación.CasosdeUso.PlayerSecurityService .[#707070,thickness=2].> SistemadeAutenticación.ModelodeDominio : "<color:#707070>Usa"
+@enduml
